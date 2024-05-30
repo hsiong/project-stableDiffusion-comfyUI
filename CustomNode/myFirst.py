@@ -1,5 +1,12 @@
 import time
 
+__doc = '1234'
+__doc = "2345"
+DOC = "2345"
+DOC = "1234"
+
+print(__doc)
+
 money = 100
 def addmoney(m):
     global money
@@ -31,3 +38,4 @@ localtime2 = f"{time.localtime(times).tm_hour}:{time.localtime(times).tm_min}"
 
 print(localtime)
 print(localtime2)
+
