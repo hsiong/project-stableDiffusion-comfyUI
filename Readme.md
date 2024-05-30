@@ -1,11 +1,14 @@
-- download https://github.com/comfyanonymous/ComfyUI
-- 秋叶整合包 https://www.bilibili.com/video/BV1Ew411776J/?spm_id_from=333.999.0.0&vd_source=2774965e63414d32c855e45d7fca856a
-- OOTD duffsion https://openart.ai/workflows/datou/ootdiffusion/8XE70w17xstgLBOCl4Bl
-- 
+
 
 # 基础操作
 
-https://www.comflowy.com/zh-CN/basics/basic-nodes
+## 资料
+
+- download https://github.com/comfyanonymous/ComfyUI
+- 秋叶整合包 https://www.bilibili.com/video/BV1Ew411776J/?spm_id_from=333.999.0.0&vd_source=2774965e63414d32c855e45d7fca856a
+- https://www.comflowy.com/zh-CN/basics/basic-nodes
+
+## 快捷键
 
 + 拖拽多个组件
 
@@ -25,17 +28,14 @@ https://www.comflowy.com/zh-CN/basics/basic-nodes
 
 https://www.youtube.com/watch?v=SPCaY1Q-P88&list=PLre94Fo0ReBLqf3yoYlnxU-dqKCg-sXTM&index=3
 
-## 加载模型 Module
+## 基础组件
++ 加载模型 Module: add node - loader - load checkpoint
++ 提示词 Prompt: conditioning - clip text encoder (Prompt)
++ 分组 Group: add color, add group, add general-note
++ 随机数: Primitive, choose randomize
++ 保存字符串: Save Text
 
-add node - loader - load checkpoint
 
-## 提示词 Prompt
-
-conditioning - clip text encoder (Prompt)
-
-## 分组 Group
-
-add color, add group, add general-note
 
 ## 采样器 Sampler
 
@@ -82,7 +82,6 @@ base模型生成小图, refiner模型生成大图
   + text 拉出来,  add node - utils - Primitive 
   + 采样器改为 sampling - KSampler(Advanced)
 + refiner:
-
   + 增加 refiner - checkpoint
   + 复制 prompt , text 连到 base text
   + base 高阶采样器输出到 refiner 高阶采样器, steps 与 base 一致, start_at_step = base end_at_step, end_at_stetp >= steps, return_with_leftover_noise false(可以使用 utils-Primitive 简化)
@@ -222,6 +221,10 @@ https://github.com/zcfrank1st/Comfyui-Yolov8
 
 + https://openart.ai/workflows/datou/ootdiffusion/8XE70w17xstgLBOCl4Bl
 
+# realistic
+## realisticSDXL
+Stable Diffusion【真人模型】：美得令人心动亚洲女性大模型迎来SDXL版XXMix_9realisticSDXL: https://blog.csdn.net/libaiup/article/details/139318705
+
 # 其他
 
 ## 模型
@@ -254,3 +257,7 @@ https://github.com/zcfrank1st/Comfyui-Yolov8
 + lora
 + sora
 + rag
+
+# 一些问题
++ 看不到 workSpace  
+customNodes => update workSpace
