@@ -261,3 +261,8 @@ Stable Diffusion【真人模型】：美得令人心动亚洲女性大模型迎�
 # 一些问题
 + 看不到 workSpace  
 customNodes => update workSpace
+
++ Inpaint 局部重绘
++ IPAdapter FaceID 身份保持
++ Kontext 看图再按文字改图
+
