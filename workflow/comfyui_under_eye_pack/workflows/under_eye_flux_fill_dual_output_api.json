@@ -1,0 +1,333 @@
+{
+  "7": {
+    "inputs": {
+      "text": "identity change, different person, eye shape change, larger eyes, different nose, different lips, different makeup, lashes change, over-smoothed skin, plastic skin, cartoon, illustration, heavy bruising, bandage, stitches, blood, warped eyelids, asymmetry, distorted pupils",
+      "clip": [
+        "34",
+        0
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP Text Encode (Prompt)"
+    }
+  },
+  "32": {
+    "inputs": {
+      "vae_name": "ae.safetensors"
+    },
+    "class_type": "VAELoader",
+    "_meta": {
+      "title": "Load VAE"
+    }
+  },
+  "34": {
+    "inputs": {
+      "clip_name1": "clip_l.safetensors",
+      "clip_name2": "t5xxl_fp16.safetensors",
+      "type": "flux",
+      "device": "default"
+    },
+    "class_type": "DualCLIPLoader",
+    "_meta": {
+      "title": "DualCLIPLoader"
+    }
+  },
+  "46": {
+    "inputs": {
+      "text": "Photorealistic lower-eyelid blepharoplasty simulation on the same person. Edit only the under-eye area inside the mask. Remove eye bags, keep identity, skin texture, lighting, camera angle, eyebrows, eyelashes, sclera, iris, makeup, and background unchanged. Immediate post-op appearance: mild swelling, slight redness, subtle edema, realistic early recovery. No bandages. No visible stitches. No beauty retouching.",
+      "clip": [
+        "34",
+        0
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP Text Encode (Prompt)"
+    }
+  },
+  "47": {
+    "inputs": {
+      "image": "3-fluxinpaint2.png",
+      "upload": "image"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "Load Image"
+    },
+    "is_changed": [
+      "3cf6cc0960df5d59f79a07057eb7327b879e36f807c83af1b22fd24ed3b7e7f8"
+    ]
+  },
+  "48": {
+    "inputs": {
+      "guidance": 18.0,
+      "conditioning": [
+        "46",
+        0
+      ]
+    },
+    "class_type": "FluxGuidance",
+    "_meta": {
+      "title": "FluxGuidance"
+    }
+  },
+  "49": {
+    "inputs": {
+      "unet_name": "flux1-fill-dev.safetensors",
+      "weight_dtype": "fp8_e4m3fn"
+    },
+    "class_type": "UNETLoader",
+    "_meta": {
+      "title": "Load Diffusion Model"
+    }
+  },
+  "50": {
+    "inputs": {
+      "model": [
+        "49",
+        0
+      ]
+    },
+    "class_type": "DifferentialDiffusion",
+    "_meta": {
+      "title": "Differential Diffusion"
+    }
+  },
+  "51": {
+    "inputs": {
+      "noise_mask": false,
+      "positive": [
+        "48",
+        0
+      ],
+      "negative": [
+        "7",
+        0
+      ],
+      "vae": [
+        "32",
+        0
+      ],
+      "pixels": [
+        "55",
+        0
+      ],
+      "mask": [
+        "55",
+        1
+      ]
+    },
+    "class_type": "InpaintModelConditioning",
+    "_meta": {
+      "title": "InpaintModelConditioning"
+    }
+  },
+  "52": {
+    "inputs": {
+      "seed": 424242424242,
+      "steps": 20,
+      "cfg": 2.0,
+      "sampler_name": "euler",
+      "scheduler": "normal",
+      "denoise": 1.0,
+      "model": [
+        "50",
+        0
+      ],
+      "positive": [
+        "51",
+        0
+      ],
+      "negative": [
+        "51",
+        1
+      ],
+      "latent_image": [
+        "51",
+        2
+      ]
+    },
+    "class_type": "KSampler",
+    "_meta": {
+      "title": "KSampler"
+    }
+  },
+  "53": {
+    "inputs": {
+      "samples": [
+        "52",
+        0
+      ],
+      "vae": [
+        "32",
+        0
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "VAE Decode"
+    }
+  },
+  "54": {
+    "inputs": {
+      "filename_prefix": "under_eye_immediate",
+      "images": [
+        "53",
+        0
+      ]
+    },
+    "class_type": "SaveImage",
+    "_meta": {
+      "title": "Save Image"
+    }
+  },
+  "55": {
+    "inputs": {
+      "image": [
+        "47",
+        0
+      ],
+      "model_path": "models/mediapipe/face_landmarker.task",
+      "depth_ratio": 0.22,
+      "width_padding_ratio": 0.08,
+      "dilate_px": 12,
+      "feather_px": 18,
+      "overlay_opacity": 0.35,
+      "min_face_detection_confidence": 0.5,
+      "min_face_presence_confidence": 0.5,
+      "min_tracking_confidence": 0.5
+    },
+    "class_type": "MediaPipeUnderEyeMask",
+    "_meta": {
+      "title": "MediaPipe Under-Eye Mask"
+    }
+  },
+  "56": {
+    "inputs": {
+      "filename_prefix": "under_eye_mask_preview",
+      "images": [
+        "55",
+        2
+      ]
+    },
+    "class_type": "SaveImage",
+    "_meta": {
+      "title": "Save Mask Preview"
+    }
+  },
+  "57": {
+    "inputs": {
+      "text": "Photorealistic lower-eyelid blepharoplasty recovery simulation on the same person. Edit only the under-eye area inside the mask. Remove eye bags, preserve identity, skin texture, lighting, camera angle, eyebrows, eyelashes, sclera, iris, makeup, and background. Good recovery at 10 to 30 days: flatter lower-eyelid contour, smoother tear trough transition, redness mostly faded, only minimal residual swelling, natural healed appearance. No bandages. No visible stitches. No glam retouching.",
+      "clip": [
+        "34",
+        0
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP Text Encode (Recovery Prompt)"
+    }
+  },
+  "58": {
+    "inputs": {
+      "guidance": 16.0,
+      "conditioning": [
+        "57",
+        0
+      ]
+    },
+    "class_type": "FluxGuidance",
+    "_meta": {
+      "title": "FluxGuidance (Recovery)"
+    }
+  },
+  "59": {
+    "inputs": {
+      "noise_mask": false,
+      "positive": [
+        "58",
+        0
+      ],
+      "negative": [
+        "7",
+        0
+      ],
+      "vae": [
+        "32",
+        0
+      ],
+      "pixels": [
+        "55",
+        0
+      ],
+      "mask": [
+        "55",
+        1
+      ]
+    },
+    "class_type": "InpaintModelConditioning",
+    "_meta": {
+      "title": "InpaintModelConditioning (Recovery)"
+    }
+  },
+  "60": {
+    "inputs": {
+      "seed": 424242424242,
+      "steps": 20,
+      "cfg": 2.0,
+      "sampler_name": "euler",
+      "scheduler": "normal",
+      "denoise": 1.0,
+      "model": [
+        "50",
+        0
+      ],
+      "positive": [
+        "59",
+        0
+      ],
+      "negative": [
+        "59",
+        1
+      ],
+      "latent_image": [
+        "59",
+        2
+      ]
+    },
+    "class_type": "KSampler",
+    "_meta": {
+      "title": "KSampler (Recovery)"
+    }
+  },
+  "61": {
+    "inputs": {
+      "samples": [
+        "60",
+        0
+      ],
+      "vae": [
+        "32",
+        0
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "VAE Decode (Recovery)"
+    }
+  },
+  "62": {
+    "inputs": {
+      "filename_prefix": "under_eye_recovered",
+      "images": [
+        "61",
+        0
+      ]
+    },
+    "class_type": "SaveImage",
+    "_meta": {
+      "title": "Save Image (Recovery)"
+    }
+  }
+}
